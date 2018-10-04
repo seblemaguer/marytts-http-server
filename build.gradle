@@ -45,9 +45,7 @@ targetCompatibility = 1.8
 
 configurations {
     jaxDoclet
-}
-configurations.all {
-   exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    all*.exclude module: 'spring-boot-starter-logging' // to avoid circle dependency between log4 and slf4j
 }
 
 def maryttsVersion = '6.0.1-ALPHA2'
@@ -59,18 +57,12 @@ dependencies {
         runtime group: 'de.dfki.mary', name: "marytts-lang-$locale", version: maryttsVersion
     }
 
-    testCompile group: 'de.dfki.mary', name: 'marytts-common', version: maryttsVersion
-    ['en'].each { locale ->
-        testCompile group: 'de.dfki.mary', name: "marytts-lang-$locale", version: maryttsVersion
-    }
-
     // JSON part
     compile group:"org.json", name:"json", version:"20090211"
 
     // Sprint/boot
     compile("org.springframework.boot:spring-boot-starter-web") {
         exclude module: "logback-classic"
-        exclude module: 'spring-boot-starter-logging'
     }
 
     compile ('org.springframework.boot:spring-boot-starter-log4j2')
