@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/marytts/marytts-http-server.svg?branch=6.x)](https://travis-ci.org/marytts/marytts-http-server)
+
 # MaryTTS HTTP server
 
 This is the source code repository for the HTTP Server RESTFUL wrapper of the multilingual open-source MARY text-to-speech platform (MaryTTS).  **MaryTTS can be found on [this page](https://github.com/marytts/marytts/)**.
