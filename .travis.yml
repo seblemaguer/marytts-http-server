@@ -1,0 +1,16 @@
+sudo: false
+
+branches:
+  only:
+    - 6.x
+
+language: java
+jdk:
+  - oraclejdk8
+  - openjdk8
+
+install: ./gradlew b
+
+cache:
+  directories:
+  - $HOME/.gradle
