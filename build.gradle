@@ -34,7 +34,7 @@ jar {
 repositories {
     jcenter()
     maven {
-        url 'https://oss.jfrog.org/artifactory/oss-snapshot-local'
+        url 'https://oss.jfrog.org/artifactory/oss-release-local'
     }
 }
 
@@ -50,11 +50,24 @@ configurations.all {
    exclude group: 'org.slf4j', module: 'slf4j-log4j12'
 }
 
-def maryttsVersion = '6.0.1-SNAPSHOT'
+def maryttsVersion = '6.0.1-ALPHA2'
 
 dependencies {
+    // MaryTTS
+    compile group: 'de.dfki.mary', name: 'marytts-common', version: maryttsVersion
+    ['en'].each { locale ->
+        runtime group: 'de.dfki.mary', name: "marytts-lang-$locale", version: maryttsVersion
+    }
+
+    testCompile group: 'de.dfki.mary', name: 'marytts-common', version: maryttsVersion
+    ['en'].each { locale ->
+        testCompile group: 'de.dfki.mary', name: "marytts-lang-$locale", version: maryttsVersion
+    }
+
+    // JSON part
     compile group:"org.json", name:"json", version:"20090211"
 
+    // Sprint/boot
     compile("org.springframework.boot:spring-boot-starter-web") {
         exclude module: "logback-classic"
         exclude module: 'spring-boot-starter-logging'
@@ -62,28 +75,17 @@ dependencies {
 
     compile ('org.springframework.boot:spring-boot-starter-log4j2')
 
-    // compile group: 'de.dfki.mary', name: 'marytts-hsmm', version: maryttsVersion
-    compile group: 'de.dfki.mary', name: 'marytts-common', version: maryttsVersion
-    ['en'].each { locale ->
-        runtime group: 'de.dfki.mary', name: "marytts-lang-$locale", version: maryttsVersion
-    }
-
-    // testCompile group: 'de.dfki.mary', name: 'marytts-hsmm', version: maryttsVersion
-    testCompile group: 'de.dfki.mary', name: 'marytts-common', version: maryttsVersion
-    ['en'].each { locale ->
-        testCompile group: 'de.dfki.mary', name: "marytts-lang-$locale", version: maryttsVersion
-    }
-    runtime fileTree(dir: 'installed', include: '*.jar')
-
-    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-web
-    compile group: 'org.apache.logging.log4j', name: 'log4j-web', version: '2.6.2'
-
-
     //standard spring boot testing framework
     testCompile("org.springframework.boot:spring-boot-starter-test")
 
     //spring REST docs generator
     testCompile("org.springframework.restdocs:spring-restdocs-mockmvc")
+
+    // Logging
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-web
+    compile group: 'org.apache.logging.log4j', name: 'log4j-web', version: '2.6.2'
+
+
 }
 
 
